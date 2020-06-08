@@ -1,0 +1,65 @@
+{
+  "name": "@mongozilla/nest",
+  "version": "0.0.3",
+  "description": "Nest.js MongoZilla Module",
+  "main": "index.js",
+  "files": [
+    "dist",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "format": "prettier --write \"(src|test)/**/*.ts\"",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arsdu24/mongozilla-nest.git"
+  },
+  "keywords": [
+    "mest",
+    "mongozila",
+    "mongodb",
+    "typescript",
+    "orm"
+  ],
+  "author": "arsdu24",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arsdu24/mongozilla-nest/issues"
+  },
+  "homepage": "https://github.com/arsdu24/mongozilla-nest#readme",
+  "peerDependencies": {
+    "@mongozilla/mongozilla": "^0.0.22",
+    "@nestjs/common": "^7.1.3",
+    "mongodb": "^3.5.5",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "@mongozilla/mongozilla": "^0.0.22",
+    "@nestjs/common": "^7.1.3",
+    "@types/jest": "^25.2.1",
+    "@types/lodash": "^4.14.149",
+    "@types/mongodb": "^3.5.5",
+    "@types/node": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.3.0",
+    "mongodb": "^3.5.5",
+    "prettier": "^2.0.4",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^25.3.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.9.5",
+    "utility-types": "^3.10.0"
+  }
+}
