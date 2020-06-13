@@ -1,6 +1,6 @@
 {
   "name": "@mongozilla/nest",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Nest.js MongoZilla Module",
   "main": "index.js",
   "files": [
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/arsdu24/mongozilla-nest#readme",
   "peerDependencies": {
-    "@mongozilla/mongozilla": "^0.0.22",
+    "@mongozilla/mongozilla": "^0.0",
     "@nestjs/common": "^7.1.3",
     "mongodb": "^3.5.5",
     "reflect-metadata": "^0.1.13",
