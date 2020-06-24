@@ -7,6 +7,8 @@ import {
 import { connect, listSchemas, Schema } from '@mongozilla/mongozilla';
 import { MongoClientOptions } from 'mongodb';
 import { Provider } from '@nestjs/common/interfaces/modules/provider.interface';
+import { APP_FILTER } from '@nestjs/core';
+import { MongoZillaExceptionHandler } from './mongozilla.exception-handler';
 
 type MongoZillaConnection = MongoClientOptions & { uri: string; name?: string };
 
@@ -25,12 +27,13 @@ export class MongoZillaModule {
     const connectionProviders: Provider[] = connections.map((options) => ({
       provide: connectionProviderName(options.name),
       async useFactory() {
-        return await connect(options);
+        return connect(options);
       },
     }));
 
     return {
       module: MongoZillaModule,
+      global: true,
       providers: [
         ...connectionProviders,
         {
@@ -52,6 +55,10 @@ export class MongoZillaModule {
 
             logger.log(`Mapped ${schemas.length} entities.`);
           },
+        },
+        {
+          provide: APP_FILTER,
+          useClass: MongoZillaExceptionHandler,
         },
       ],
     };
