@@ -1,6 +1,6 @@
 {
   "name": "@mongozilla/nest",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "description": "Nest.js MongoZilla Module",
   "main": "index.js",
   "files": [

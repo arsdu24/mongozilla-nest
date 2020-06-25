@@ -1,23 +1,21 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Class } from 'utility-types';
-import { TransformOptionsType } from '../types';
-import { TransformEntityPipe } from '../pipes';
+import {Body} from '@nestjs/common';
+import {Class} from 'utility-types';
+import {DataToTransformOptionsPipe, TransformEntityPipe} from '../pipes';
 
 export function BodyToEntity<T extends object>(
   entity: Class<T>,
   prop?: string,
   fail?: boolean,
-) {
-  return createParamDecorator<
-    unknown,
-    ExecutionContext,
-    TransformOptionsType<T>
-  >(
-    (_, ctx: ExecutionContext): TransformOptionsType<T> => {
-      const request = ctx.switchToHttp().getRequest();
-      const data: string | string[] = prop ? request.body[prop] : request.body;
+): ParameterDecorator {
+    return (target, propertyKey, parameterIndex) => {
+        const args: (any | undefined)[] = [
+            prop,
+            new DataToTransformOptionsPipe(entity, !!fail),
+            TransformEntityPipe
+        ];
 
-      return { entity, data, fail };
-    },
-  )(TransformEntityPipe);
+        return Body(
+            ...args.filter((value: any | undefined): value is any => !!value)
+        )(target, propertyKey, parameterIndex)
+    }
 }

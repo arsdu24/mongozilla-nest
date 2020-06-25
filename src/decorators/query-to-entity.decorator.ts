@@ -1,23 +1,24 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Class } from 'utility-types';
-import { TransformOptionsType } from '../types';
-import { TransformEntityPipe } from '../pipes';
+import {Query} from '@nestjs/common';
+import {Class} from 'utility-types';
+import {DataToTransformOptionsPipe, TransformEntityPipe} from '../pipes';
 
 export function QueryToEntity<T extends object>(
   entity: Class<T>,
   query: string,
   fail?: boolean,
-) {
-  return createParamDecorator<
-    unknown,
-    ExecutionContext,
-    TransformOptionsType<T>
-  >(
-    (_, ctx: ExecutionContext): TransformOptionsType<T> => {
-      const request = ctx.switchToHttp().getRequest();
-      const data: string | string[] = request.query[query];
+): ParameterDecorator {
+    return (target, propertyKey, parameterIndex) => {
+        const metaDataKey: string = "design:paramtypes";
+        const types: Function[] = Reflect.getMetadata(metaDataKey, target, propertyKey);
 
-      return { entity, data, fail };
-    },
-  )(TransformEntityPipe);
+        types[parameterIndex] = String;
+
+        Reflect.defineMetadata(metaDataKey, types, target, propertyKey);
+
+        return Query(
+            query,
+            new DataToTransformOptionsPipe(entity, !!fail),
+            TransformEntityPipe
+        )(target, propertyKey, parameterIndex)
+    }
 }
